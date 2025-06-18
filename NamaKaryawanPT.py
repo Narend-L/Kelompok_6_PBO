@@ -69,7 +69,7 @@ class Staff(Karyawan):
         self.nama_divisi = nama_divisi
 
     def gaji_pokok(self):
-        return 7000000
+        return 5000000
 
     def total_gaji(self):
         return self.gaji_pokok() + self.tunjangan() + self.insentif()
