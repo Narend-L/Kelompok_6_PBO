@@ -57,7 +57,7 @@ class KepalaDivisi(Karyawan):
         self.nama_divisi = nama_divisi
 
     def gaji_pokok(self):
-        return 8000000
+        return 9000000
 
     def total_gaji(self):
         return self.gaji_pokok() + self.tunjangan() + self.insentif()
@@ -69,7 +69,7 @@ class Staff(Karyawan):
         self.nama_divisi = nama_divisi
 
     def gaji_pokok(self):
-        return 6000000
+        return 7000000
 
     def total_gaji(self):
         return self.gaji_pokok() + self.tunjangan() + self.insentif()
