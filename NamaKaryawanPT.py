@@ -37,7 +37,7 @@ class Karyawan(ABC):
 
 class CEO(Karyawan):
     def gaji_pokok(self):
-        return 15000000
+        return 1600000
 
     def total_gaji(self):
         return self.gaji_pokok() + self.tunjangan()
