@@ -70,7 +70,6 @@ class Muffin(KueKering, Developable):
         self.panggang()
         self.topping()
 
-# -------------------- Manajemen Produk --------------------
 class ManajemenProduk:
     def __init__(self):
         self.daftar_produk = []
