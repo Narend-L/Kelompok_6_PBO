@@ -14,4 +14,3 @@ class Developable(ABC):
 class Toppable(ABC):
     @abstractmethod
     def topping(self): pass
-s
