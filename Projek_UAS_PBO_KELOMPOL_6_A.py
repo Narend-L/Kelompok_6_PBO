@@ -114,3 +114,47 @@ class ManajemenProduk:
                     print("Jenis produk tidak dikenali.")
                 return
         print("Produk tidak ditemukan.")
+
+def input_produk_baru(manajer: ManajemenProduk):
+    print("\n--- Tambah Produk Baru ---")
+    nama = input("Nama produk: ")
+    kode = input("Kode produk (unik): ")
+    jenis = input("Jenis produk (RotiManis/Croissant/ButterCookies/Muffin): ").strip().lower()
+
+    bahan_baku = {}
+    while True:
+        bahan = input("Nama bahan (ketik 'selesai' untuk berhenti): ")
+        if bahan.lower() == 'selesai':
+            break
+        try:
+            jumlah = int(input(f"Jumlah {bahan}: "))
+            harga_per_unit = int(input(f"Harga per satuan {bahan}: "))
+            if jumlah <= 0 or harga_per_unit <= 0:
+                print("Jumlah dan harga harus lebih dari 0.")
+                continue
+            bahan_baku[bahan] = {"jumlah": jumlah, "harga_per_unit": harga_per_unit}
+        except ValueError:
+            print("Input jumlah dan harga harus berupa angka.")
+
+    try:
+        harga = int(input("Harga jual per pcs (Rp): "))
+        if harga <= 0:
+            print("Harga jual harus lebih dari 0.")
+            return
+    except ValueError:
+        print("Harga jual harus angka.")
+        return
+
+    if jenis == "rotimanis":
+        produk = RotiManis(nama, kode, bahan_baku, harga)
+    elif jenis == "croissant":
+        produk = Croissant(nama, kode, bahan_baku, harga)
+    elif jenis == "buttercookies":
+        produk = ButterCookies(nama, kode, bahan_baku, harga)
+    elif jenis == "muffin":
+        produk = Muffin(nama, kode, bahan_baku, harga)
+    else:
+        print("Jenis produk tidak dikenali.")
+        return
+
+    manajer.tambah_produk(produk)
