@@ -42,3 +42,30 @@ class Produk(ABC):
     @abstractmethod
     def proses_produksi(self):
         pass
+
+class KueKering(Produk, cakeable, Toppable):
+    def __init__(self, nama, kode, bahan_baku, harga_jual):
+        super().__init__(nama, kode, bahan_baku, harga_jual)
+
+
+class ButterCookies(KueKering):
+    def adon(self): print(f"[{self.nama}] Aduk adonan butter cookies...")
+    def panggang(self): print(f"[{self.nama}] Panggang butter cookies...")
+    def topping(self): print(f"[{self.nama}] Tambah hiasan gula...")
+
+    def proses_produksi(self):
+        self.adon()
+        self.panggang()
+        self.topping()
+
+class Muffin(KueKering, Developable):
+    def adon(self): print(f"[{self.nama}] Campur adonan muffin...")
+    def kembangkan(self): print(f"[{self.nama}] Diamkan adonan muffin...")
+    def panggang(self): print(f"[{self.nama}] Panggang muffin...")
+    def topping(self): print(f"[{self.nama}] Tambah choco chips...")
+
+    def proses_produksi(self):
+        self.adon()
+        self.kembangkan()
+        self.panggang()
+        self.topping()
