@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-# -------------------- Interface Produksi --------------------
+
 class cakeable(ABC):
     @abstractmethod
     def adon(self): pass
@@ -21,7 +21,7 @@ class Produk(ABC):
     def __init__(self, nama, kode, bahan_baku, harga_jual):
         self.nama = nama
         self.kode = kode
-        self.bahan_baku = bahan_baku  # dict: {nama_bahan: {"jumlah": int, "harga_per_unit": int}}
+        self.bahan_baku = bahan_baku  
         self.harga_jual = harga_jual
         self.biaya_produksi = self.hitung_biaya_produksi()
 
