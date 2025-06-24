@@ -1,30 +1,27 @@
 from abc import ABC, abstractmethod
 
+# -------------------- Interface Produksi --------------------
 class cakeable(ABC):
     @abstractmethod
-    def adon(self): 
-        pass
+    def adon(self): pass
 
     @abstractmethod
-    def panggang(self):
-        pass
+    def panggang(self): pass
 
 class Developable(ABC):
     @abstractmethod
-    def kembangkan(self): 
-        pass
+    def kembangkan(self): pass
 
 class Toppable(ABC):
     @abstractmethod
-    def topping(self): 
-        pass
+    def topping(self): pass
 
 
 class Produk(ABC):
     def __init__(self, nama, kode, bahan_baku, harga_jual):
         self.nama = nama
         self.kode = kode
-        self.bahan_baku = bahan_baku  
+        self.bahan_baku = bahan_baku  # dict: {nama_bahan: {"jumlah": int, "harga_per_unit": int}}
         self.harga_jual = harga_jual
         self.biaya_produksi = self.hitung_biaya_produksi()
 
@@ -40,8 +37,39 @@ class Produk(ABC):
         return self.__class__.__name__
 
     @abstractmethod
+    def proses_produksi(self): pass
+
+
+class RotiManis(Produk, cakeable, Developable, Toppable):
+    def __init__(self, nama, kode, bahan_baku, harga_jual):
+        super().__init__(nama, kode, bahan_baku, harga_jual)
+
+    def adon(self): print(f"[{self.nama}] Mengadon roti manis...")
+    def kembangkan(self): print(f"[{self.nama}] Pengembangan roti manis...")
+    def panggang(self): print(f"[{self.nama}] Memanggang roti manis...")
+    def topping(self): print(f"[{self.nama}] Menambahkan topping roti manis...")
+
     def proses_produksi(self):
-        pass
+        self.adon()
+        self.kembangkan()
+        self.panggang()
+        self.topping()
+
+class Croissant(Produk, cakeable, Developable, Toppable):
+    def __init__(self, nama, kode, bahan_baku, harga_jual):
+        super().__init__(nama, kode, bahan_baku, harga_jual)
+
+    def adon(self): print(f"[{self.nama}] Adon laminasi croissant...")
+    def kembangkan(self): print(f"[{self.nama}] Pengembangan croissant...")
+    def panggang(self): print(f"[{self.nama}] Panggang croissant...")
+    def topping(self): print(f"[{self.nama}] Tambah butter glaze...")
+
+    def proses_produksi(self):
+        self.adon()
+        self.kembangkan()
+        self.panggang()
+        self.topping()
+
 
 class KueKering(Produk, cakeable, Toppable):
     def __init__(self, nama, kode, bahan_baku, harga_jual):
@@ -69,6 +97,7 @@ class Muffin(KueKering, Developable):
         self.kembangkan()
         self.panggang()
         self.topping()
+
 
 class ManajemenProduk:
     def __init__(self):
@@ -103,17 +132,18 @@ class ManajemenProduk:
                 print(f"\nSimulasi proses :")
                 jenis = p.__class__.__name__.lower()
                 if jenis == "rotimanis":
-                    print(f"{p.nama} > RotiManis = Pengadonan, Pengembangan, Pemanggangan")
+                    print("RotiManis = Pengadonan, Pengembangan, Pemanggangan")
                 elif jenis == "croissant":
-                    print(f"{p.nama} > Croissant = Pengadonan, Pengembangan, Pemanggangan")
+                    print("Croissant = Pengadonan, Pengembangan, Pemanggangan")
                 elif jenis == "muffin":
-                    print(f"{p.nama} > Muffin = Pengadonan, Pengembangan, Pemanggangan, Topping")
+                    print("Muffin = Pengadonan, Pengembangan, Pemanggangan, Topping")
                 elif jenis == "buttercookies":
-                    print(f"{p.nama} > ButterCookies = Pengadonan, Pemanggangan, Topping")
+                    print("ButterCookies = Pengadonan, Pemanggangan, Topping")
                 else:
                     print("Jenis produk tidak dikenali.")
                 return
         print("Produk tidak ditemukan.")
+
 
 def input_produk_baru(manajer: ManajemenProduk):
     print("\n--- Tambah Produk Baru ---")
@@ -158,3 +188,43 @@ def input_produk_baru(manajer: ManajemenProduk):
         return
 
     manajer.tambah_produk(produk)
+
+
+def menu():
+    manajer = ManajemenProduk()
+    while True:
+        print("\n--- Hanari Bakery Menu ---")
+        print("1. Tambah Produk Baru")
+        print("2. Tampilkan Semua Produk")
+        print("3. Estimasi Profit")
+        print("4. Simulasi Proses Produksi")
+        print("5. Keluar")
+
+        pilihan = input("Pilih menu: ")
+        if pilihan == "1":
+            input_produk_baru(manajer)
+        elif pilihan == "2":
+            manajer.tampilkan_produk()
+        elif pilihan == "3":
+            kode = input("Masukkan kode produk: ")
+            try:
+                jumlah = int(input("Masukkan jumlah pcs: "))
+                if jumlah <= 0:
+                    print("Jumlah harus positif.")
+                    continue
+            except ValueError:
+                print("Input jumlah harus angka.")
+                continue
+            manajer.estimasi_profit(kode, jumlah)
+        elif pilihan == "4":
+            kode = input("Masukkan kode produk: ")
+            manajer.simulasi_produksi(kode)
+        elif pilihan == "5":
+            print("Terima kasih.")
+            break
+        else:
+            print("Pilihan tidak valid.")
+
+
+if __name__ == "__main__":
+    menu()
